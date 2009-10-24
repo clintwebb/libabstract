@@ -30,7 +30,7 @@
 #include <unistd.h>
 
 
-#if (LIBABSTRACT_VERSION != 0x00000100)
+#if (LIBABSTRACT_VERSION != 0x00000200)
 	#error "Incorrect header version."
 #endif
 
@@ -162,12 +162,14 @@ int abstract_loadfile(abstract_t *abstract, const char *filename)
 		while (next != NULL && *next != '\0') {
 			line = strsep(&next, "\n");
 			assert(line);
+			
+// 			printf("abstract: line='%s'\n", line);
 
 			// strip leading blanks or tabs
 			while (*line == ' ' || *line == '\t') { line ++; }
 			
 			// check for comment
-			if (*line != '#' && *line == ';') {
+			if (*line != '#' && *line != ';') {
 				// strip dos line ending if found.
 				len = strlen(line);
 				while (len > 0 && (line[len-1] == ' ' || line[len-1] == '\r' || line[len-1] == '\t')) {
@@ -184,47 +186,59 @@ int abstract_loadfile(abstract_t *abstract, const char *filename)
 					assert(key);
 					assert(value);
 					
+// 					printf("abstract: key='%s', value='%s'\n", key, value);
+					
 					
 					// compare the key against known paramaters.
-					if (strcasecmp(key, "master_host")) {
+					if (strcasecmp(key, "master_host") == 0) {
 						assert(abstract->master.host == NULL);
 						abstract->master.host = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "master_user")) {
+					else if (strcasecmp(key, "master_user") == 0) {
 						assert(abstract->master.user == NULL);
 						abstract->master.user = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "master_pass")) {
+					else if (strcasecmp(key, "master_pass") == 0) {
 						assert(abstract->master.pass == NULL);
 						abstract->master.pass = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "master_db")) {
+					else if (strcasecmp(key, "master_db") == 0) {
 						assert(abstract->master.db == NULL);
 						abstract->master.db = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "master_port")) {
+					else if (strcasecmp(key, "master_port") == 0) {
 						assert(abstract->master.port == 0);
 						abstract->master.port = atoi(value);
+						hosts++;
 					}
-					if (strcasecmp(key, "slave_host")) {
+					else if (strcasecmp(key, "slave_host") == 0) {
 						assert(abstract->slave.host == NULL);
 						abstract->slave.host = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "slave_user")) {
+					else if (strcasecmp(key, "slave_user") == 0) {
 						assert(abstract->slave.user == NULL);
 						abstract->slave.user = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "slave_pass")) {
+					else if (strcasecmp(key, "slave_pass") == 0) {
 						assert(abstract->slave.pass == NULL);
 						abstract->slave.pass = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "slave_db")) {
+					else if (strcasecmp(key, "slave_db") == 0) {
 						assert(abstract->slave.db == NULL);
 						abstract->slave.db = value;
+						hosts++;
 					}
-					else if (strcasecmp(key, "slave_port")) {
+					else if (strcasecmp(key, "slave_port") == 0) {
 						assert(abstract->slave.port == 0);
 						abstract->slave.port = atoi(value);
+						hosts++;
 					}
 					else {
 						fprintf(stderr, "libabstract: Invalid config option.  '%s'=='%s'\n", key, value);

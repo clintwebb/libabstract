@@ -33,8 +33,8 @@
 #include <mysql/mysql.h>
 
 
-#define LIBABSTRACT_VERSION 0x00000100
-#define LIBABSTRACT_VERSION_TEXT "v0.01"
+#define LIBABSTRACT_VERSION 0x00000200
+#define LIBABSTRACT_VERSION_TEXT "v0.02"
 
 
 // The abstract data structure.  This will contain all the information loaded from the config file, and will be used to 
